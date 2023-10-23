@@ -1,13 +1,21 @@
 import React from "react";
-import { Quiz } from "../interfaces/quiz";
-
 import "./QuizCard.css";
 import { Question } from "../interfaces/question";
 
-export const QuizCard = ({
-    quiz,
-    handleClick
-}: {) => {
+interface Quiz {
+    id: number;
+    title: string;
+    body: string;
+    published: boolean;
+    questionList: Question[];
+}
+
+interface QuizCardProps {
+    quiz: Quiz;
+    handleClick: (id: number) => void;
+}
+
+export const QuizCard: React.FC<QuizCardProps> = ({ quiz, handleClick }) => {
     const filteredQuestions = quiz.questionList.filter(
         (q: Question): boolean =>
             (quiz.published && q.published) || !quiz.published
