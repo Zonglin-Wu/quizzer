@@ -5,14 +5,23 @@ import { Form, Button } from "react-bootstrap";
 import "./QuizQuestion.css";
 type ChangeEvent = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>;
 
-export const QuizQuestion = ({
+interface QuizQuestionProps {
+    index: number;
+    question: Question;
+    submitted: boolean;
+    handleSubmit: (index: number) => void;
+    addPoints: (p: number) => void;
+    editQuestionSub: (questionId: number, sub: string) => void;
+}
+
+export const QuizQuestion: React.FC<QuizQuestionProps> = ({
     index,
     question,
     submitted,
     handleSubmit,
     addPoints,
     editQuestionSub
-}: {}) => {
+}) => {
     const handleClick = (e: ChangeEvent) => {
         if (!submitted) {
             editQuestionSub(question.id, e.target.value);
@@ -53,7 +62,7 @@ export const QuizQuestion = ({
                             {question.options.map(
                                 (option: string, i: number) => (
                                     <Form.Check
-                                        type=""
+                                        type="radio"
                                         name={"questionChoice" + index}
                                         key={option + " | " + i}
                                         label={option}
